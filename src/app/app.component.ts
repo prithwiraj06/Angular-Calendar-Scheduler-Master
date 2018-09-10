@@ -1,89 +1,35 @@
-# Angular Calendar Scheduler
+import { Component, OnInit, Inject, LOCALE_ID } from '@angular/core';
+import { Subject } from 'rxjs';
 
-This project provide a scheduler view component for [mattlewis92/angular-calendar](https://github.com/mattlewis92/angular-calendar).
+import {
+    startOfHour,
+    endOfDay,
+    addHours,
+    addDays,
+    addMonths,
+} from 'date-fns';
+import {
+    SchedulerViewDay,
+    SchedulerViewHour,
+    SchedulerViewHourSegment,
+    CalendarSchedulerEvent,
+    CalendarSchedulerEventStatus,
+    CalendarSchedulerEventAction,
+    CalendarPeriod,
+    startOfPeriod,
+    endOfPeriod,
+    addPeriod,
+    subPeriod,
+    SchedulerDateFormatter
+} from 'angular-calendar-scheduler';
+import {
+    CalendarDateFormatter
+} from 'angular-calendar';
 
-<a href="https://www.npmjs.com/package/angular-calendar-scheduler">
-    <img src="https://badge.fury.io/js/angular-calendar-scheduler.svg" alt="npm">
-</a> 
-<a href="https://travis-ci.org/bm-software/angular-calendar-scheduler">
-    <img src="https://travis-ci.org/bm-software/angular-calendar-scheduler.svg?branch=master" alt="travis">
-</a> 
-<a href="https://codecov.io/gh/bm-software/angular-calendar-scheduler">
-    <img src="https://codecov.io/gh/bm-software/angular-calendar-scheduler/branch/master/graph/badge.svg" alt="codecov">
-</a>
-<a href="https://github.com/bm-software/angular-calendar-scheduler/issues">
-    <img src="https://img.shields.io/github/issues/bm-software/angular-calendar-scheduler.svg" alt="issues">
-</a>
-<a href="https://github.com/bm-software/angular-calendar-scheduler/network">
-    <img src="https://img.shields.io/github/forks/bm-software/angular-calendar-scheduler.svg" alt="forks">
-</a>
-<a href="https://github.com/bm-software/angular-calendar-scheduler/stargazers">
-    <img src="https://img.shields.io/github/stars/bm-software/angular-calendar-scheduler.svg" alt="stars">
-</a>
-<a href="https://github.com/bm-software/angular-calendar-scheduler/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/bm-software/angular-calendar-scheduler.svg" alt="license">
-</a>
-
-___
-
-<!-- * [About](#about) -->
-* [Getting Started](#getting-started)
-    * [Install](#install)
-    * [Include Component](#include-component)
-    * [Usage](#usage)
-<!-- * [API](#api)
-  * [Properties](#properties) -->
-* [License](#license)
-
-<!-- ## About -->
-
-## Getting Started
-
-### Install
-
-#### NPM
-
-```sh
-npm install angular-calendar-scheduler --save
-```
-
-#### Yarn
-
-```sh
-yarn add angular-calendar-scheduler
-```
-
-### Include Component
-
-#### Import
-
-```ts
-import { CalendarModule } from 'angular-calendar';
-import { SchedulerModule } from 'angular-calendar-scheduler';
-
-@NgModule({
-    ...
-    imports: [
-        ...,
-        CalendarModule.forRoot(),
-        SchedulerModule.forRoot({ locale: 'en', headerDateFormat: 'daysRange' }),
-        ...
-    ],
-    ...
-})
-class AppModule { }
-```
-
-### Usage
-
-#### app.component.ts
-
-```ts
-import { CalendarDateFormatter } from 'angular-calendar';
-import { ... } from 'angular-calendar-scheduler';
+import { AppService } from './services/app.service';
 
 @Component({
-    selector: 'app-component',
+    selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
     providers: [{
@@ -198,34 +144,3 @@ export class AppComponent implements OnInit {
         console.log('segmentClicked Segment', segment);
     }
 }
-```
-
-#### app.component.html
-
-```html
-    ...
-    <calendar-scheduler-view [viewDate]="viewDate"
-                             [events]="events"
-                             [locale]="locale"
-                             [weekStartsOn]="weekStartsOn"
-                             [tooltipPlacement]="'top'"
-                             [refresh]="refreshSubject"
-                             [excludeDays]="excludeDays"
-                             [startsWithToday]="startsWithToday"
-                             [hourSegments]="2"
-                             [dayStartHour]="dayStartHour"
-                             [dayEndHour]="dayEndHour"
-                             [dayModifier]="dayModifier"
-                             [hourModifier]="hourModifier"
-                             [segmentModifier]="segmentModifier"
-                             [showActions]="true"
-                             (dayClicked)="dayClicked($event.day)"
-                             (segmentClicked)="segmentClicked('Clicked', $event.segment)"
-                             (eventClicked)="eventClicked('Clicked', $event.event)">
-    </calendar-scheduler-view>
-    ...
-```
-
-### License
-
-This software is released under the MIT license. See [LICENSE](LICENSE) for more details.
